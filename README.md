@@ -148,7 +148,40 @@ The extension includes Llama Agent
 2. Select Env with an agent if you haven't done it before. 
 3. Write a query and attach files with the @ button if needed
 
-More details(https://github.com/ggml-org/llama.vscode/wiki) 
+More details(https://github.com/ggml-org/llama.vscode/wiki)
+
+### Phone spectator (Build Remote Agent)
+
+Optional. Pair a phone running [Build Remote Agent](https://grokbuildremote.com/)
+to spectate Llama Agent through the free MIT `gbr-agent`. Protocol `gbr/1`.
+This does **not** replace the Telegram bot. Phone is spectator + veto, not
+orchestrator. Independent product by Linespotting AB. Not affiliated with xAI
+or SpaceX.
+
+```bash
+curl -fsSL https://grokbuildremote.com/install.sh | bash
+gbr-agent version          # v0.6.0+
+gbr-agent pair && gbr-agent run
+```
+
+Then add a VS Code MCP server (stdio) and enable it in Llama Agent's MCP tool
+list:
+
+```json
+{
+  "servers": {
+    "gbr": {
+      "command": "node",
+      "args": ["GrokBuildRemote-Agents/mcp/gbr-mcp/bin/gbr-mcp.js"]
+    }
+  }
+}
+```
+
+Attach is loopback only: `http://127.0.0.1:8788/health` after `gbr-agent run`.
+Do not commit mailbox keys.
+
+Agent source: https://github.com/LinespottingOrg/GrokBuildRemote-Agents
 
 ## Examples
 
